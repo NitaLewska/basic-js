@@ -18,7 +18,6 @@ const HALF_LIFE_PERIOD = 5730;
  *
  */
 function dateSample(sampleActivity) {
-  console.log('!!!!!', sampleActivity, - Math.floor(Math.log2(+sampleActivity / MODERN_ACTIVITY) * HALF_LIFE_PERIOD))
   if (+sampleActivity > MODERN_ACTIVITY || +sampleActivity <= 0 || typeof sampleActivity != 'string') {
     return false
   }
