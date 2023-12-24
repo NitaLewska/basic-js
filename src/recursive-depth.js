@@ -17,7 +17,9 @@ class DepthCalculator {
 
   calculateDepth(arr) {
     if (!arr.some(a => Array.isArray(a))) {
-      return this.depth
+      let finalDepth = this.depth
+      this.depth = 1
+      return finalDepth
 } else {
   arr = arr.flat()
   this.depth = +this.depth + 1
