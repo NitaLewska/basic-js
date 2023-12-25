@@ -14,32 +14,38 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function transform(arr) {
-  if (!(arr instanceof Array)) {
+  if (!Array.isArray(arr)) {
     throw new Error ("'arr' parameter must be an instance of the Array!")
   }
-  if (arr.length = 0) {
-    return arr
+  if (arr.length === 0) {
+    return []
   }
-  let i = 0
-  while (arr[i]) {
-    if (arr[i] = '--discard-next') {
-      arr[i + 1] = 'DELETED'
-      i +=2
+
+  let output = []
+  arr.map ((a, i, arr) => {
+    if (arr[i-1] === '--discard-next') {
+      output.push(undefined);
+    } else {
+      switch (a) {
+        case '--double-prev':
+          output.push(output.at(-1));
+        break;
+        case '--double-next':
+          output.push(arr[i+1]);
+        break;
+        case '--discard-prev':
+          output.pop();
+        break;
+
+        case '--discard-next':
+          output.push(undefined);
+        break;
+
+        default: output.push(a);
+      }
     }
-    if (arr[i] = '--discard-prev') {
-      arr[i - 1] = ''
-      i +=2
-    }
-    if (arr[i] = '--double-next') {
-      arr.splice(i, 0, arr[i + 1])
-      i +=2
-    }
-    if (arr[i] = '--double-prev') {
-      arr[i - 1] = ''
-      i +=2
-    }
-  }
-  return arr.filter(a => a != 'DELETED')
+  })
+  return output.filter( a => a !== undefined)
 }
 
 module.exports = {
